@@ -1,9 +1,6 @@
 ﻿using Model.Interface;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Model.Entities
 {
@@ -17,6 +14,11 @@ namespace Model.Entities
         public string Description { get; set; }
         public string Image { get; set; }
         public int User_Id { get; set; }
+        [NotMapped]
+        public User User { get; set; }
         public int Category_Id { get; set; }
+        [NotMapped]
+        public Category Category { get; set; }
+        
     }
 }

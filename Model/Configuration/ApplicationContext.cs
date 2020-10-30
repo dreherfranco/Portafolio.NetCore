@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Model.Entities;
 
 namespace Model.Configuration
@@ -15,13 +12,18 @@ namespace Model.Configuration
         public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("Server=localhost; Database=portafolio; Uid=root@localhost; Pwd= ;");
-                
-            }
-        }*/
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        { 
+
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.User_Id);
+
+            modelBuilder.Entity<Post>()
+               .HasOne(p => p.Category)
+               .WithMany(c => c.Posts)
+               .HasForeignKey(p => p.Category_Id);
+        }
     }
 }
