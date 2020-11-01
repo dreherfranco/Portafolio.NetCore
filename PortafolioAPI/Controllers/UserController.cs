@@ -1,4 +1,5 @@
-﻿using DTOs.User;
+﻿using AutoMapper;
+using DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Model.Entities;
 using Model.Interface;
@@ -13,10 +14,12 @@ namespace PortafolioAPI.Controllers
     public class UserController : Controller
     {
         private readonly IRepository<User> Repository;
-        
-        public UserController(IRepository<User> repository)
+        private readonly IMapper mapper;
+
+        public UserController(IRepository<User> repository, IMapper mapper)
         {
             this.Repository = repository;
+            this.mapper = mapper;
         }
 
         [HttpPost]

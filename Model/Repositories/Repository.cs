@@ -29,7 +29,7 @@ namespace Model.Repository
                 return _context.Set<T>().Where(expression);
             }
 
-        public IEnumerable<T> GetAll()
+            public IEnumerable<T> GetAll()
             {
                 return _context.Set<T>().ToList();
             }
@@ -37,6 +37,11 @@ namespace Model.Repository
             {
                 return _context.Set<T>().Find(id);
             }
+            public void Update(T entity)
+            {
+                this._context.Update(entity);
+                _context.SaveChanges();
+             }
             public void Remove(T entity)
             {
                 _context.Set<T>().Remove(entity);
