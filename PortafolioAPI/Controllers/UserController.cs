@@ -23,14 +23,14 @@ namespace PortafolioAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<IEnumerable<User>> Post([FromBody] UserDTO user)
+        public ActionResult<UserDTO> Post([FromBody] UserDTO value)
         {
             try
             {
-                var User = new User(user.Name, user.Surname, user.Email, user.Password);
-                this.Repository.Add(User);
+                var user = this.mapper.Map<User>(value);
+                this.Repository.Add(user);
 
-                return Ok(new { Data = user });
+                return Ok(new { Data = value });
             }catch(Exception)
             {
                 return StatusCode(500);
@@ -40,11 +40,12 @@ namespace PortafolioAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<UserDTO>> Get()
         {
-            var user = this.Repository.GetAll();
+            var users = this.Repository.GetAll();
+            var usersDto = this.mapper.Map<IEnumerable<UserDTO>>(users);
 
-            return Ok(new { Data = user });
+            return Ok(new { Data = usersDto });
         }
     }
 }
